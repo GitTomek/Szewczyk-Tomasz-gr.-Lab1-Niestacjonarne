@@ -1,0 +1,1 @@
+# Szewczyk-Tomasz-gr.-Lab1-Niestacjonarne
