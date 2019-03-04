@@ -2,6 +2,7 @@ let canvas = document.querySelector('#ps')
 let ctx = canvas.getContext('2d')
 const imgSrc = "https://picsum.photos/600/300/?random=1";
 const brightnessSlider = document.querySelector('#brightnessValue');
+const contrastSlider = document.querySelector('#contrastValue');
 
 let img = new Image();
 
@@ -15,34 +16,44 @@ img.src = imgSrc
 img.addEventListener('load', () => {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
 })
+
+//Modyfikacja Jasności
 brightnessSlider.addEventListener('change', brightnessChange);
 
 function brightnessChange() {
-    // pobieranie pikseli z canvas
-    console.log(brightnessSlider.value)
+
+
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
 
-    //nie bangla
+
     let factor = brightnessSlider.value
     for (let i = 0; i < imageData.data.length; i += 4) {
-        // dodaje  zmienną 'factor' 30 do wartości pixela
-
-        imageData.data[i] += factor
-        imageData.data[i + 1] += factor
-        imageData.data[i + 2] += factor
-
+        imageData.data[i] += 128 * (factor / 100);
+        imageData.data[i + 1] += 128 * (factor / 100);
+        imageData.data[i + 2] += 128 * (factor / 100);
     }
     ctx.putImageData(imageData, 0, 0)
 
-
 }
 
+//Modyfikacja KOntrastu
+
+contrastSlider.addEventListener('change', contrastChange);
+
+function contrastChange() {
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
 
 
+    let factor = contrastSlider.value
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        imageData.data[i] += 128 * (factor / 100);
+        imageData.data[i + 1] += 128 * (factor / 100);
+        imageData.data[i + 2] += 128 * (factor / 100);
+    }
+    ctx.putImageData(imageData, 0, 0)
 
-
-
-
+}
+console.log(contrastSlider.value)
 
 
 // zmiana kontrastu jane piksele rozjaśnić
